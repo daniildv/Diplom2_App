@@ -1,0 +1,805 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище uk_managementModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Accrual">
+          <Key>
+            <PropertyRef Name="accrual_id" />
+          </Key>
+          <Property Name="accrual_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="account_id" Type="int" Nullable="false" />
+          <Property Name="service_type" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="amount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="period" Type="date" Nullable="false" />
+          <Property Name="created_at" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="Apartment">
+          <Key>
+            <PropertyRef Name="apartment_id" />
+          </Key>
+          <Property Name="apartment_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="house_id" Type="int" Nullable="false" />
+          <Property Name="number" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="total_area" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="rooms" Type="smallint" />
+        </EntityType>
+        <EntityType Name="House">
+          <Key>
+            <PropertyRef Name="house_id" />
+          </Key>
+          <Property Name="house_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="address" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="floors" Type="int" />
+          <Property Name="construction_year" Type="int" />
+          <Property Name="total_area" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="MeterDevice">
+          <Key>
+            <PropertyRef Name="meter_id" />
+          </Key>
+          <Property Name="meter_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="account_iаd" Type="int" Nullable="false" />
+          <Property Name="service_type" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="serial_number" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="install_date" Type="date" />
+          <Property Name="next_check_date" Type="date" />
+          <Property Name="is_active" Type="bit" />
+        </EntityType>
+        <EntityType Name="MeterReading">
+          <Key>
+            <PropertyRef Name="reading_id" />
+          </Key>
+          <Property Name="reading_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="meter_id" Type="int" Nullable="false" />
+          <Property Name="reading_date" Type="date" Nullable="false" />
+          <Property Name="value" Type="decimal" Precision="12" Scale="3" Nullable="false" />
+          <Property Name="source" Type="nvarchar" MaxLength="20" />
+          <Property Name="confirmed" Type="bit" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="payment_id" />
+          </Key>
+          <Property Name="payment_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="account_id" Type="int" Nullable="false" />
+          <Property Name="amount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="payment_date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="comment" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="PersonalAccount">
+          <Key>
+            <PropertyRef Name="account_id" />
+          </Key>
+          <Property Name="account_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="apartment_id" Type="int" Nullable="false" />
+          <Property Name="owner_fio" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="phone" Type="nvarchar" MaxLength="20" />
+          <Property Name="email" Type="nvarchar" MaxLength="100" />
+          <Property Name="open_date" Type="date" />
+          <Property Name="is_active" Type="bit" />
+          <Property Name="comment" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="request_id" />
+          </Key>
+          <Property Name="request_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="account_id" Type="int" Nullable="false" />
+          <Property Name="type_id" Type="int" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="status" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="created_at" Type="datetime2" Precision="7" />
+          <Property Name="appointed_master" Type="nvarchar" MaxLength="100" />
+          <Property Name="completed_at" Type="datetime2" Precision="7" />
+          <Property Name="rating" Type="smallint" />
+          <Property Name="comment_close" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="RequestType">
+          <Key>
+            <PropertyRef Name="type_id" />
+          </Key>
+          <Property Name="type_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="category" Type="nvarchar" MaxLength="50" />
+          <Property Name="norm_hours" Type="int" />
+          <Property Name="description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleName" />
+          </Key>
+          <Property Name="RoleName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserSurname" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="UserPatronymic" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="UserLogin" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="UserPassword" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Apartment__house__4E88ABD4">
+          <End Role="House" Type="Self.House" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Apartment" Type="Self.Apartment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="House">
+              <PropertyRef Name="house_id" />
+            </Principal>
+            <Dependent Role="Apartment">
+              <PropertyRef Name="house_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MeterDevi__accou__59063A47">
+          <End Role="PersonalAccount" Type="Self.PersonalAccount" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MeterDevice" Type="Self.MeterDevice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonalAccount">
+              <PropertyRef Name="account_id" />
+            </Principal>
+            <Dependent Role="MeterDevice">
+              <PropertyRef Name="account_iаd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MeterRead__meter__5EBF139D">
+          <End Role="MeterDevice" Type="Self.MeterDevice" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MeterReading" Type="Self.MeterReading" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MeterDevice">
+              <PropertyRef Name="meter_id" />
+            </Principal>
+            <Dependent Role="MeterReading">
+              <PropertyRef Name="meter_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PersonalA__apart__534D60F1">
+          <End Role="Apartment" Type="Self.Apartment" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PersonalAccount" Type="Self.PersonalAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Apartment">
+              <PropertyRef Name="apartment_id" />
+            </Principal>
+            <Dependent Role="PersonalAccount">
+              <PropertyRef Name="apartment_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Request__account__6B24EA82">
+          <End Role="PersonalAccount" Type="Self.PersonalAccount" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonalAccount">
+              <PropertyRef Name="account_id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Request__type_id__6C190EBB">
+          <End Role="RequestType" Type="Self.RequestType" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RequestType">
+              <PropertyRef Name="type_id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Accrual_PersonalAccount">
+          <End Role="PersonalAccount" Type="Self.PersonalAccount" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Accrual" Type="Self.Accrual" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonalAccount">
+              <PropertyRef Name="account_id" />
+            </Principal>
+            <Dependent Role="Accrual">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_PersonalAccount">
+          <End Role="PersonalAccount" Type="Self.PersonalAccount" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonalAccount">
+              <PropertyRef Name="account_id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleName" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище uk_managementModelContainer">
+          <EntitySet Name="Accrual" EntityType="Self.Accrual" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Apartment" EntityType="Self.Apartment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="House" EntityType="Self.House" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MeterDevice" EntityType="Self.MeterDevice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MeterReading" EntityType="Self.MeterReading" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PersonalAccount" EntityType="Self.PersonalAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Request" EntityType="Self.Request" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RequestType" EntityType="Self.RequestType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Apartment__house__4E88ABD4" Association="Self.FK__Apartment__house__4E88ABD4">
+            <End Role="House" EntitySet="House" />
+            <End Role="Apartment" EntitySet="Apartment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MeterDevi__accou__59063A47" Association="Self.FK__MeterDevi__accou__59063A47">
+            <End Role="PersonalAccount" EntitySet="PersonalAccount" />
+            <End Role="MeterDevice" EntitySet="MeterDevice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MeterRead__meter__5EBF139D" Association="Self.FK__MeterRead__meter__5EBF139D">
+            <End Role="MeterDevice" EntitySet="MeterDevice" />
+            <End Role="MeterReading" EntitySet="MeterReading" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PersonalA__apart__534D60F1" Association="Self.FK__PersonalA__apart__534D60F1">
+            <End Role="Apartment" EntitySet="Apartment" />
+            <End Role="PersonalAccount" EntitySet="PersonalAccount" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Request__account__6B24EA82" Association="Self.FK__Request__account__6B24EA82">
+            <End Role="PersonalAccount" EntitySet="PersonalAccount" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Request__type_id__6C190EBB" Association="Self.FK__Request__type_id__6C190EBB">
+            <End Role="RequestType" EntitySet="RequestType" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Accrual_PersonalAccount" Association="Self.FK_Accrual_PersonalAccount">
+            <End Role="PersonalAccount" EntitySet="PersonalAccount" />
+            <End Role="Accrual" EntitySet="Accrual" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_PersonalAccount" Association="Self.FK_Payment_PersonalAccount">
+            <End Role="PersonalAccount" EntitySet="PersonalAccount" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="uk_managementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Apartment">
+          <Key>
+            <PropertyRef Name="apartment_id" />
+          </Key>
+          <Property Name="apartment_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="house_id" Type="Int32" Nullable="false" />
+          <Property Name="number" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="total_area" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="rooms" Type="Int16" />
+          <NavigationProperty Name="House" Relationship="Self.FK__Apartment__house__4E88ABD4" FromRole="Apartment" ToRole="House" />
+          <NavigationProperty Name="PersonalAccount" Relationship="Self.FK__PersonalA__apart__534D60F1" FromRole="Apartment" ToRole="PersonalAccount" />
+        </EntityType>
+        <EntityType Name="House">
+          <Key>
+            <PropertyRef Name="house_id" />
+          </Key>
+          <Property Name="house_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="floors" Type="Int32" />
+          <Property Name="construction_year" Type="Int32" />
+          <Property Name="total_area" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="Apartment" Relationship="Self.FK__Apartment__house__4E88ABD4" FromRole="House" ToRole="Apartment" />
+        </EntityType>
+        <EntityType Name="MeterDevice">
+          <Key>
+            <PropertyRef Name="meter_id" />
+          </Key>
+          <Property Name="meter_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="account_iаd" Type="Int32" Nullable="false" />
+          <Property Name="service_type" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="serial_number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="install_date" Type="DateTime" Precision="0" />
+          <Property Name="next_check_date" Type="DateTime" Precision="0" />
+          <Property Name="is_active" Type="Boolean" />
+          <NavigationProperty Name="PersonalAccount" Relationship="Self.FK__MeterDevi__accou__59063A47" FromRole="MeterDevice" ToRole="PersonalAccount" />
+          <NavigationProperty Name="MeterReading" Relationship="Self.FK__MeterRead__meter__5EBF139D" FromRole="MeterDevice" ToRole="MeterReading" />
+        </EntityType>
+        <EntityType Name="MeterReading">
+          <Key>
+            <PropertyRef Name="reading_id" />
+          </Key>
+          <Property Name="reading_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="meter_id" Type="Int32" Nullable="false" />
+          <Property Name="reading_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="value" Type="Decimal" Precision="12" Scale="3" Nullable="false" />
+          <Property Name="source" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="confirmed" Type="Boolean" />
+          <NavigationProperty Name="MeterDevice" Relationship="Self.FK__MeterRead__meter__5EBF139D" FromRole="MeterReading" ToRole="MeterDevice" />
+        </EntityType>
+        <EntityType Name="PersonalAccount">
+          <Key>
+            <PropertyRef Name="account_id" />
+          </Key>
+          <Property Name="account_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="apartment_id" Type="Int32" Nullable="false" />
+          <Property Name="owner_fio" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="open_date" Type="DateTime" Precision="0" />
+          <Property Name="is_active" Type="Boolean" />
+          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Apartment" Relationship="Self.FK__PersonalA__apart__534D60F1" FromRole="PersonalAccount" ToRole="Apartment" />
+          <NavigationProperty Name="MeterDevice" Relationship="Self.FK__MeterDevi__accou__59063A47" FromRole="PersonalAccount" ToRole="MeterDevice" />
+          <NavigationProperty Name="Request" Relationship="Self.FK__Request__account__6B24EA82" FromRole="PersonalAccount" ToRole="Request" />
+          <NavigationProperty Name="Accrual" Relationship="uk_managementModel.FK_Accrual_PersonalAccount" FromRole="PersonalAccount" ToRole="Accrual" />
+          <NavigationProperty Name="Payment" Relationship="uk_managementModel.FK_Payment_PersonalAccount" FromRole="PersonalAccount" ToRole="Payment" />
+        </EntityType>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="request_id" />
+          </Key>
+          <Property Name="request_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="account_id" Type="Int32" Nullable="false" />
+          <Property Name="type_id" Type="Int32" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Precision="7" />
+          <Property Name="appointed_master" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="completed_at" Type="DateTime" Precision="7" />
+          <Property Name="rating" Type="Int16" />
+          <Property Name="comment_close" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PersonalAccount" Relationship="Self.FK__Request__account__6B24EA82" FromRole="Request" ToRole="PersonalAccount" />
+          <NavigationProperty Name="RequestType" Relationship="Self.FK__Request__type_id__6C190EBB" FromRole="Request" ToRole="RequestType" />
+        </EntityType>
+        <EntityType Name="RequestType">
+          <Key>
+            <PropertyRef Name="type_id" />
+          </Key>
+          <Property Name="type_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="category" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="norm_hours" Type="Int32" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Request" Relationship="Self.FK__Request__type_id__6C190EBB" FromRole="RequestType" ToRole="Request" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleName" />
+          </Key>
+          <Property Name="RoleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Role" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserSurname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserPatronymic" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserLogin" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserPassword" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RoleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_User_Role" FromRole="User" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK__Apartment__house__4E88ABD4">
+          <End Role="House" Type="Self.House" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Apartment" Type="Self.Apartment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="House">
+              <PropertyRef Name="house_id" />
+            </Principal>
+            <Dependent Role="Apartment">
+              <PropertyRef Name="house_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PersonalA__apart__534D60F1">
+          <End Role="Apartment" Type="Self.Apartment" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PersonalAccount" Type="Self.PersonalAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Apartment">
+              <PropertyRef Name="apartment_id" />
+            </Principal>
+            <Dependent Role="PersonalAccount">
+              <PropertyRef Name="apartment_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MeterDevi__accou__59063A47">
+          <End Role="PersonalAccount" Type="Self.PersonalAccount" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MeterDevice" Type="Self.MeterDevice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonalAccount">
+              <PropertyRef Name="account_id" />
+            </Principal>
+            <Dependent Role="MeterDevice">
+              <PropertyRef Name="account_iаd" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MeterRead__meter__5EBF139D">
+          <End Role="MeterDevice" Type="Self.MeterDevice" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MeterReading" Type="Self.MeterReading" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MeterDevice">
+              <PropertyRef Name="meter_id" />
+            </Principal>
+            <Dependent Role="MeterReading">
+              <PropertyRef Name="meter_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Request__account__6B24EA82">
+          <End Role="PersonalAccount" Type="Self.PersonalAccount" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonalAccount">
+              <PropertyRef Name="account_id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Request__type_id__6C190EBB">
+          <End Role="RequestType" Type="Self.RequestType" Multiplicity="1" />
+          <End Role="Request" Type="Self.Request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RequestType">
+              <PropertyRef Name="type_id" />
+            </Principal>
+            <Dependent Role="Request">
+              <PropertyRef Name="type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleName" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="uk_managementEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Apartment" EntityType="Self.Apartment" />
+          <EntitySet Name="House" EntityType="Self.House" />
+          <EntitySet Name="MeterDevice" EntityType="Self.MeterDevice" />
+          <EntitySet Name="MeterReading" EntityType="Self.MeterReading" />
+          <EntitySet Name="PersonalAccount" EntityType="Self.PersonalAccount" />
+          <EntitySet Name="Request" EntityType="Self.Request" />
+          <EntitySet Name="RequestType" EntityType="Self.RequestType" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <AssociationSet Name="FK__Apartment__house__4E88ABD4" Association="Self.FK__Apartment__house__4E88ABD4">
+            <End Role="House" EntitySet="House" />
+            <End Role="Apartment" EntitySet="Apartment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PersonalA__apart__534D60F1" Association="Self.FK__PersonalA__apart__534D60F1">
+            <End Role="Apartment" EntitySet="Apartment" />
+            <End Role="PersonalAccount" EntitySet="PersonalAccount" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MeterDevi__accou__59063A47" Association="Self.FK__MeterDevi__accou__59063A47">
+            <End Role="PersonalAccount" EntitySet="PersonalAccount" />
+            <End Role="MeterDevice" EntitySet="MeterDevice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MeterRead__meter__5EBF139D" Association="Self.FK__MeterRead__meter__5EBF139D">
+            <End Role="MeterDevice" EntitySet="MeterDevice" />
+            <End Role="MeterReading" EntitySet="MeterReading" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Request__account__6B24EA82" Association="Self.FK__Request__account__6B24EA82">
+            <End Role="PersonalAccount" EntitySet="PersonalAccount" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Request__type_id__6C190EBB" Association="Self.FK__Request__type_id__6C190EBB">
+            <End Role="RequestType" EntitySet="RequestType" />
+            <End Role="Request" EntitySet="Request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <EntitySet Name="Accrual" EntityType="uk_managementModel.Accrual" />
+          <EntitySet Name="Payment" EntityType="uk_managementModel.Payment" />
+          <AssociationSet Name="FK_Accrual_PersonalAccount" Association="uk_managementModel.FK_Accrual_PersonalAccount">
+            <End Role="PersonalAccount" EntitySet="PersonalAccount" />
+            <End Role="Accrual" EntitySet="Accrual" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_PersonalAccount" Association="uk_managementModel.FK_Payment_PersonalAccount">
+            <End Role="PersonalAccount" EntitySet="PersonalAccount" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Accrual">
+          <Key>
+            <PropertyRef Name="accrual_id" />
+          </Key>
+          <Property Name="accrual_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="account_id" Type="Int32" Nullable="false" />
+          <Property Name="service_type" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="amount" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="period" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="created_at" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="PersonalAccount" Relationship="uk_managementModel.FK_Accrual_PersonalAccount" FromRole="Accrual" ToRole="PersonalAccount" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="payment_id" />
+          </Key>
+          <Property Name="payment_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="account_id" Type="Int32" Nullable="false" />
+          <Property Name="amount" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="payment_date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PersonalAccount" Relationship="uk_managementModel.FK_Payment_PersonalAccount" FromRole="Payment" ToRole="PersonalAccount" />
+        </EntityType>
+        <Association Name="FK_Accrual_PersonalAccount">
+          <End Type="uk_managementModel.PersonalAccount" Role="PersonalAccount" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="uk_managementModel.Accrual" Role="Accrual" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonalAccount">
+              <PropertyRef Name="account_id" />
+            </Principal>
+            <Dependent Role="Accrual">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_PersonalAccount">
+          <End Type="uk_managementModel.PersonalAccount" Role="PersonalAccount" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="uk_managementModel.Payment" Role="Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonalAccount">
+              <PropertyRef Name="account_id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище uk_managementModelContainer" CdmEntityContainer="uk_managementEntities">
+          <EntitySetMapping Name="Apartment">
+            <EntityTypeMapping TypeName="uk_managementModel.Apartment">
+              <MappingFragment StoreEntitySet="Apartment">
+                <ScalarProperty Name="apartment_id" ColumnName="apartment_id" />
+                <ScalarProperty Name="house_id" ColumnName="house_id" />
+                <ScalarProperty Name="number" ColumnName="number" />
+                <ScalarProperty Name="total_area" ColumnName="total_area" />
+                <ScalarProperty Name="rooms" ColumnName="rooms" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="House">
+            <EntityTypeMapping TypeName="uk_managementModel.House">
+              <MappingFragment StoreEntitySet="House">
+                <ScalarProperty Name="house_id" ColumnName="house_id" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="floors" ColumnName="floors" />
+                <ScalarProperty Name="construction_year" ColumnName="construction_year" />
+                <ScalarProperty Name="total_area" ColumnName="total_area" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MeterDevice">
+            <EntityTypeMapping TypeName="uk_managementModel.MeterDevice">
+              <MappingFragment StoreEntitySet="MeterDevice">
+                <ScalarProperty Name="meter_id" ColumnName="meter_id" />
+                <ScalarProperty Name="account_iаd" ColumnName="account_iаd" />
+                <ScalarProperty Name="service_type" ColumnName="service_type" />
+                <ScalarProperty Name="serial_number" ColumnName="serial_number" />
+                <ScalarProperty Name="install_date" ColumnName="install_date" />
+                <ScalarProperty Name="next_check_date" ColumnName="next_check_date" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MeterReading">
+            <EntityTypeMapping TypeName="uk_managementModel.MeterReading">
+              <MappingFragment StoreEntitySet="MeterReading">
+                <ScalarProperty Name="reading_id" ColumnName="reading_id" />
+                <ScalarProperty Name="meter_id" ColumnName="meter_id" />
+                <ScalarProperty Name="reading_date" ColumnName="reading_date" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="source" ColumnName="source" />
+                <ScalarProperty Name="confirmed" ColumnName="confirmed" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PersonalAccount">
+            <EntityTypeMapping TypeName="uk_managementModel.PersonalAccount">
+              <MappingFragment StoreEntitySet="PersonalAccount">
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+                <ScalarProperty Name="apartment_id" ColumnName="apartment_id" />
+                <ScalarProperty Name="owner_fio" ColumnName="owner_fio" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="open_date" ColumnName="open_date" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Request">
+            <EntityTypeMapping TypeName="uk_managementModel.Request">
+              <MappingFragment StoreEntitySet="Request">
+                <ScalarProperty Name="request_id" ColumnName="request_id" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+                <ScalarProperty Name="type_id" ColumnName="type_id" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="appointed_master" ColumnName="appointed_master" />
+                <ScalarProperty Name="completed_at" ColumnName="completed_at" />
+                <ScalarProperty Name="rating" ColumnName="rating" />
+                <ScalarProperty Name="comment_close" ColumnName="comment_close" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RequestType">
+            <EntityTypeMapping TypeName="uk_managementModel.RequestType">
+              <MappingFragment StoreEntitySet="RequestType">
+                <ScalarProperty Name="type_id" ColumnName="type_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="norm_hours" ColumnName="norm_hours" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="uk_managementModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="uk_managementModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="uk_managementModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserSurname" ColumnName="UserSurname" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserPatronymic" ColumnName="UserPatronymic" />
+                <ScalarProperty Name="UserLogin" ColumnName="UserLogin" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Accrual">
+            <EntityTypeMapping TypeName="uk_managementModel.Accrual">
+              <MappingFragment StoreEntitySet="Accrual">
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="period" ColumnName="period" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="service_type" ColumnName="service_type" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+                <ScalarProperty Name="accrual_id" ColumnName="accrual_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payment">
+            <EntityTypeMapping TypeName="uk_managementModel.Payment">
+              <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="payment_date" ColumnName="payment_date" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+                <ScalarProperty Name="payment_id" ColumnName="payment_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

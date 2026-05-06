@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f84643906a594cf498660768ad20205a" Name="Diagram1">
+        <EntityTypeShape EntityType="uk_managementModel.Apartment" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="uk_managementModel.House" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="uk_managementModel.MeterDevice" Width="1.5" PointX="7.5" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="uk_managementModel.MeterReading" Width="1.5" PointX="9.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="uk_managementModel.PersonalAccount" Width="1.5" PointX="5.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="uk_managementModel.Request" Width="1.5" PointX="7.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="uk_managementModel.RequestType" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="uk_managementModel.Role" Width="1.5" PointX="0.75" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="uk_managementModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="uk_managementModel.User" Width="1.5" PointX="3" PointY="9.75" IsExpanded="true" />
+        <AssociationConnector Association="uk_managementModel.FK__Apartment__house__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="uk_managementModel.FK__PersonalA__apart__534D60F1" ManuallyRouted="false" />
+        <AssociationConnector Association="uk_managementModel.FK__MeterDevi__accou__59063A47" ManuallyRouted="false" />
+        <AssociationConnector Association="uk_managementModel.FK__MeterRead__meter__5EBF139D" ManuallyRouted="false" />
+        <AssociationConnector Association="uk_managementModel.FK__Request__account__6B24EA82" ManuallyRouted="false" />
+        <AssociationConnector Association="uk_managementModel.FK__Request__type_id__6C190EBB" ManuallyRouted="false" />
+        <AssociationConnector Association="uk_managementModel.FK_User_Role" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="uk_managementModel.Accrual" Width="1.5" PointX="7.5" PointY="13" />
+        <EntityTypeShape EntityType="uk_managementModel.Payment" Width="1.5" PointX="7.5" PointY="16.125" />
+        <AssociationConnector Association="uk_managementModel.FK_Accrual_PersonalAccount" />
+        <AssociationConnector Association="uk_managementModel.FK_Payment_PersonalAccount" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

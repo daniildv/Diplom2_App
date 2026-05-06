@@ -1,0 +1,86 @@
+﻿<Window x:Class="Diplom2.Window2"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Diplom2"
+        mc:Ignorable="d"
+        Title="Показания" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Шапка -->
+        <Border Background="#2C3E50" Padding="15,12">
+            <Grid>
+                <TextBlock Text="Показания" Foreground="White" FontSize="18" FontWeight="Bold"
+                           VerticalAlignment="Center"/>
+                <StackPanel HorizontalAlignment="Right">
+                    <TextBlock x:Name="txtOwnerFio" Text="Иванов И.И." Foreground="White" FontSize="14" TextAlignment="Right"/>
+                    <TextBlock x:Name="txtAccountNumber" Text="ЛС: 057256" Foreground="#B0C4DE" FontSize="12" TextAlignment="Right"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Таблица показаний -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Заголовки -->
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Услуга" FontWeight="Bold"
+                               Background="#F1F3F5" Padding="8"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="Последнее показание" FontWeight="Bold"
+                               Background="#F1F3F5" Padding="8"/>
+                    <TextBlock Grid.Row="0" Grid.Column="2" Text="Дата передачи" FontWeight="Bold"
+                               Background="#F1F3F5" Padding="8"/>
+                    <TextBlock Grid.Row="0" Grid.Column="3" Text="Текущее" FontWeight="Bold"
+                               Background="#F1F3F5" Padding="8"/>
+
+                    <!-- Строки для ХВС, ГВС, ЭЭ -->
+                    <TextBlock x:Name="lblService1" Grid.Row="1" Grid.Column="0" Text="Холодная вода (ХВС)" Padding="8"/>
+                    <TextBlock x:Name="lblLastValue1" Grid.Row="1" Grid.Column="1" Text="154" Padding="8"/>
+                    <TextBlock x:Name="lblLastDate1" Grid.Row="1" Grid.Column="2" Text="10.01.2026" Padding="8"/>
+                    <TextBox x:Name="txtNewValue1" Grid.Row="1" Grid.Column="3" Width="70" Height="30" Margin="4" Text=""/>
+
+                    <TextBlock x:Name="lblService2" Grid.Row="2" Grid.Column="0" Text="Горячая вода (ГВС)" Padding="8"/>
+                    <TextBlock x:Name="lblLastValue2" Grid.Row="2" Grid.Column="1" Text="92" Padding="8"/>
+                    <TextBlock x:Name="lblLastDate2" Grid.Row="2" Grid.Column="2" Text="10.01.2026" Padding="8"/>
+                    <TextBox x:Name="txtNewValue2" Grid.Row="2" Grid.Column="3" Width="70" Height="30" Margin="4" Text=""/>
+
+                    <TextBlock x:Name="lblService3" Grid.Row="3" Grid.Column="0" Text="Электроэнергия" Padding="8"/>
+                    <TextBlock x:Name="lblLastValue3" Grid.Row="3" Grid.Column="1" Text="4587" Padding="8"/>
+                    <TextBlock x:Name="lblLastDate3" Grid.Row="3" Grid.Column="2" Text="10.01.2026" Padding="8"/>
+                    <TextBox x:Name="txtNewValue3" Grid.Row="3" Grid.Column="3" Width="70" Height="30" Margin="4" Text=""/>
+                </Grid>
+
+                <Button x:Name="btnSubmitAll" Content="Передать все показания" Height="40" Background="#3498DB"
+                        Foreground="White" FontWeight="SemiBold" FontSize="14" BorderThickness="0"
+                        Margin="0,20,0,0" Cursor="Hand" Click="BtnSubmitAll_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" CornerRadius="8" Padding="12,0">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

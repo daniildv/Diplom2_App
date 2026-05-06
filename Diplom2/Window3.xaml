@@ -1,0 +1,107 @@
+﻿<Window x:Class="Diplom2.Window3"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Diplom2"
+        mc:Ignorable="d"
+        Title="Заявки (Диспетчер)" Height="600" Width="900">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Шапка -->
+        <Border Background="#2C3E50" Padding="15,12">
+            <Grid>
+                <TextBlock Text="Заявки" Foreground="White" FontSize="18" FontWeight="Bold"
+                           VerticalAlignment="Center"/>
+                <TextBlock x:Name="txtDispatcherName" Text="Диспетчер Петрова О.Н." Foreground="#B0C4DE" FontSize="13"
+                           HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+
+        <!-- Фильтры + кнопка создания -->
+        <Grid Grid.Row="1" Margin="20,15,20,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <ComboBox x:Name="cmbStatusFilter" Grid.Column="0" Margin="0,0,5,0" SelectedIndex="0"
+                      SelectionChanged="Filters_Changed">
+                <ComboBoxItem>Все статусы</ComboBoxItem>
+                <ComboBoxItem>Новая</ComboBoxItem>
+                <ComboBoxItem>Назначена</ComboBoxItem>
+                <ComboBoxItem>В работе</ComboBoxItem>
+                <ComboBoxItem>Выполнена</ComboBoxItem>
+                <ComboBoxItem>Закрыта</ComboBoxItem>
+                <ComboBoxItem>Отклонена</ComboBoxItem>
+            </ComboBox>
+
+            <TextBox x:Name="txtAddressFilter" Grid.Column="1" Margin="0,0,5,0" 
+                     TextChanged="Filters_Changed">
+                <TextBox.Text>Адрес</TextBox.Text>
+            </TextBox>
+
+            <DatePicker x:Name="dpDateFilter" Grid.Column="2" Margin="0,0,5,0"
+                        SelectedDateChanged="Filters_Changed"/>
+
+            <Button x:Name="btnCreateForClient" Grid.Column="3" Content="+ Создать заявку (по телефону)"
+                    Height="35" Background="#3498DB" Foreground="White" FontWeight="SemiBold"
+                    FontSize="13" BorderThickness="0" Padding="12,0" Cursor="Hand"
+                    Click="BtnCreateRequest_Click"/>
+        </Grid>
+
+        <!-- Список заявок -->
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+            <ItemsControl x:Name="lstRequests" Margin="20,5,20,20">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="White" CornerRadius="12" Padding="12" Margin="0,0,0,8">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel>
+                                    <TextBlock FontWeight="SemiBold" 
+                                               Text="{Binding DisplayRequestInfo}"/>
+                                    <TextBlock Foreground="#6B7280" FontSize="12" Margin="0,3,0,0"
+                                               Text="{Binding DisplayAddress}"/>
+                                    <TextBlock FontSize="12" Margin="0,2,0,0" Foreground="#444"
+                                               Text="{Binding DisplayMaster}"/>
+                                </StackPanel>
+
+                                <!-- Плашка статуса -->
+                                <Border Grid.Column="1" Background="{Binding StatusColor}" CornerRadius="20" Padding="6,2"
+                                        VerticalAlignment="Top" HorizontalAlignment="Right">
+                                    <TextBlock Text="{Binding Status}" Foreground="{Binding StatusForeground}"
+                                               FontSize="11" FontWeight="SemiBold"/>
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- Выпадающий список для выбора ЛС при создании заявки (скрыт, появляется программно) -->
+        <Popup x:Name="popupSelectAccount" Placement="Center" StaysOpen="False" Width="400" Height="300">
+            <Border Background="White" CornerRadius="8" Padding="15" BorderBrush="#BDC3C7" BorderThickness="1">
+                <StackPanel>
+                    <TextBlock Text="Выберите лицевой счёт" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                    <ComboBox x:Name="cmbAccounts" DisplayMemberPath="owner_fio" SelectedValuePath="account_id"
+                              Margin="0,0,0,10"/>
+                    <Button Content="Создать заявку" Height="35" Background="#3498DB" Foreground="White"
+                            FontWeight="SemiBold" Click="BtnConfirmCreateRequest_Click"/>
+                </StackPanel>
+            </Border>
+        </Popup>
+    </Grid>
+</Window>
